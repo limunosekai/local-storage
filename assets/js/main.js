@@ -1,7 +1,7 @@
 const addItems = document.querySelector('.add-items');
 const itemsList = document.querySelector('.plates');
 const deleteItems = document.querySelector('.delete-items');
-const items = JSON.parse(localStorage.getItem('items')) || [];
+const items = JSON.parse(localStorage.getItem('items')) || []; //왼쪽을 먼저 실행, false일 경우 오른쪽 실행
 
 function addItem(e) {
   e.preventDefault(); // submit event의 page reloading을 막아줌
