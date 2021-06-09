@@ -5,31 +5,37 @@ const items = JSON.parse(localStorage.getItem('items')) || []; //왼쪽을 먼�
 
 function addItem(e) {
   e.preventDefault(); // submit event의 page reloading을 막아줌
-  const text = (this.querySelector('[name=item]')).value;
+  const text = this.querySelector('[name=item]').value;
   const item = {
-    text,       // ES6 key값과 value값이 같을 경우 생략 가능
-    done: false
+    text, // ES6 key값과 value값이 같을 경우 생략 가능
+    done: false,
   };
 
   items.push(item);
   populateList(items, itemsList);
-  localStorage.setItem('items', JSON.stringify(items));  //localStorage에 key & value 값으로 저장
+  //localStorage에 key & value 값으로 저장
+  localStorage.setItem('items', JSON.stringify(items));
   this.reset();
 }
 
-function populateList(plates = [], platesList) {  //함수 파라미터 값에 default 설정 가능
-  platesList.innerHTML = plates.map((plate, i) => {
-    return `
+//함수 파라미터 값에 default 설정 가능
+function populateList(plates = [], platesList) {
+  platesList.innerHTML = plates
+    .map((plate, i) => {
+      return `
       <li>
-        <input type="checkbox" data-index=${i} id="item${i}" ${plate.done ? 'checked' : ''} />
+        <input type="checkbox" data-index=${i} id="item${i}" ${
+        plate.done ? 'checked' : ''
+      } />
         <label for="item${i}">${plate.text}</label>
       </li>
-    `
-  }).join('');
+    `;
+    })
+    .join('');
 }
 
 function toggleDone(e) {
-  if(!e.target.matches('input')) return; // checkbox 영역 이외의 부분을 클릭하면 escape
+  if (!e.target.matches('input')) return; // checkbox 영역 이외의 부분을 클릭하면 escape
   const el = e.target;
   const index = el.dataset.index;
   items[index].done = !items[index].done;
